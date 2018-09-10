@@ -1,0 +1,41 @@
+/*GENERADOR DE ESTAMPADO PARA PAPEL TAPIZ, EN EL CUAL AL EJECUTAR EL SKETCH SE ELIGE 
+EL COLOR DEL FONDO, EL CUAL SALE ALEATORIAMENTE, AL IGUAL QUE EL DISEÑO DEL ESTAMPADO. 
+UNA VEZ ELEGIDO EL COLOR DEL FONDO, AL DAR CLICK EN LA PANTALLA EL OTRO COLOR CAMBIA
+ALEATORIAMENTE PARA PODER OBSERVAR LA VARIEDAD DE COMBINACIONES Y SI QUEDA BIEN CON 
+EL COLOR DEL FONDO; O BIEN SE INGRESA EL CODIGO DEL COLOR QUE GUSTE EN EL CODIGO DEL
+PROGRAMA.
+UNA VEZ ELEGIDO EL DISEÑO QUE QUEREMOS, EL DISEÑO DEL PAPEL TAPIZ ESTA LISTO PARA 
+MANDARSE HACER.
+*/
+
+float r,g,b;
+
+void setup(){
+  size(700,700);
+  //El color de fondo se elige aleatoriamente al ejecutar el sketch.
+  background(random(255), random(255), random(255));   
+}
+
+void draw(){
+  loadPixels();
+  r = random(0,255);
+  g = random(0,255);
+  b = random(0,255);
+  for(int i=0; i<height; i+=1){
+    for (int j=0; j<width; j++){
+      float noise = ceil(noise(i*0.01,j*0.01)*10);   //10 = Acercamiento de la matriz.
+      color c; 
+      if(noise%2 ==0){   //Grueso de linea.
+        if(mousePressed){
+          //Modifica el RGB de acuerdo a lo que el cliente pide al dar click.
+          c= color(r,g,b); 
+          pixels[i+j*width] = c;
+        }
+      }
+    }
+  }
+  updatePixels();
+  
+  //Guarda como imagen.
+  saveFrame();
+}
